@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <canvas id="btcChart"></canvas>
+    </div>
+
+    <script>
+
+        //this function will use ajax to call the DisplayBtcPrices controller method
+        //that will currently retrieve BTC prices from the last 7 days.
+
+        function displayChart() {
+
+            //initialise chart
+            var btcChart = document.getElementById('btcChart').getContext('2d');
+
+
+            $.ajax({
+                url: '/Home/DisplayBtcPrices',
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    //map relevant data attribute fields
+                    data = data.html;
+                    let date = data.map(a => a.date);
+                    console.log(date);
+                    let price = data.map(b => b.price);
+
+                    var btcPriceChart = new Chart(btcChart, {
+                        type: 'line', // bar, horizontal bar, pie, line, doughnut, radar, polarArea
+                        data: {
+                            labels: date,
+                            datasets: [{
+                                label: 'Prices',
+                                data: price
+                            }]
+                        },
+                        options: {}
+                    });
+
+
+                }
+            })
+        }
+       
+
+        displayChart();
+
+
+    </script>
+</body>
+</html>
