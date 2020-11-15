@@ -1,5 +1,5 @@
 # Bitcoin-Chart---ChartJS-SQL-Populated
-Simple .Net Core app that tracks BTC price with nomics.com API. Results are saved to a SQL db and retrived via a query to be plotted onto a Js chart
+Simple .Net Core app that tracks BTC price with nomics.com API. Results are saved to a SQL db and retrived via an SQL query to be plotted onto a Js chart
 
 This app is still under development, but has core functionality. 
 
