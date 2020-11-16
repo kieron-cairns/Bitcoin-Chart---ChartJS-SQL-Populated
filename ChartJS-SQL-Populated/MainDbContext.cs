@@ -16,5 +16,6 @@ namespace ChartJS_SQL_Populated
 
         public DbSet<BtcPriceModel> BtcPriceList { get; set; }
 
+
     }
 }
