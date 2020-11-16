@@ -10,6 +10,6 @@ namespace ChartJS_SQL_Populated.Repository
     {
         public void GetBtcPrices();
 
-        List<BtcPriceModel> DisplayBtcPrices();
+        List<BtcPriceModel> DisplayBtcPrices(int range);
     }
 }

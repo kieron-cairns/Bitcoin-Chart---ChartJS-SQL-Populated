@@ -33,12 +33,12 @@ namespace ChartJS_SQL_Populated.Controllers
             return View();
         }
 
-        public IActionResult DisplayBtcPrices()
+        public IActionResult DisplayBtcPrices(int range)
         {
             //This method is the primary method fo retrieving all relevant information 
             //from the SQL database.
 
-            var array = repository.DisplayBtcPrices();
+            var array = repository.DisplayBtcPrices(range);
 
             //retrieve results as json ready to be plotted in graph.
 

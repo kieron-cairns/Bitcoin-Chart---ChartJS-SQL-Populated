@@ -104,8 +104,14 @@ namespace ChartJS_SQL_Populated.Repository
 
         }
 
-        public List<BtcPriceModel> DisplayBtcPrices()
+        public List<BtcPriceModel> DisplayBtcPrices(int range)
         {
+            //initially, range will be null, if so change this to 30 days.
+
+            if(range == 0)
+            {
+                range = 30;
+            }
             //This method will display the BTC prices, for a given time range selected on the index page.
 
             //initialise list for results using the BtcPriceModel class to store each class object.
@@ -114,7 +120,7 @@ namespace ChartJS_SQL_Populated.Repository
 
             //currently the method will display results for the last 7 days. This is going to be worked on so that the user can specify the amount of time. 
 
-            string commandText = "SELECT * FROM BTC_Prices WHERE DATE BETWEEN DATEADD(DD, -7, GETDATE()) AND GETDATE()";
+            string commandText = "SELECT * FROM BTC_Prices WHERE DATE BETWEEN DATEADD(DD, -@range, GETDATE()) AND GETDATE()";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -128,6 +134,7 @@ namespace ChartJS_SQL_Populated.Repository
                 //SqlDependency.Start(connectionString);
 
                 SqlCommand cmd = new SqlCommand(commandText, conn);
+                cmd.Parameters.AddWithValue("@range", range);
 
                 //Execute SQL comand and add results to BtcPriceModel List
 

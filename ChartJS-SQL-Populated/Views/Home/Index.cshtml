@@ -8,8 +8,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 </head>
+
 <body>
-    <div class="container">
+    <div class="container" id="btcPriceContainer">
+
+        <!--Below buttons will use ajax to call the DisplayBtcPrices function with the specified time frame-->
+        
+        <!--TODO: This would be better using a for loop with an array of the date ranges.-->
+
+        <btn class="btn btn-primary" onclick="displayChart(730)">2y</btn>
+        <btn class="btn btn-primary" onclick="displayChart(365)">1y</btn>
+        <btn class="btn btn-primary" onclick="displayChart(180)">6m</btn>
+        <btn class="btn btn-primary" onclick="displayChart(90)">3m</btn>
+        <btn class="btn btn-primary" onclick="displayChart(30)">1m</btn>
+        <btn class="btn btn-primary" onclick="displayChart(14)">2w</btn>
+        <btn class="btn btn-primary" onclick="displayChart(7)">1w</btn>
+        <btn class="btn btn-primary" onclick="displayChart(3)">3d</btn>
+        <btn class="btn btn-primary" onclick="displayChart(1)">1d</btn>
+
         <canvas id="btcChart"></canvas>
     </div>
 
@@ -18,14 +34,20 @@
         //this function will use ajax to call the DisplayBtcPrices controller method
         //that will currently retrieve BTC prices from the last 7 days.
 
-        function displayChart() {
+        function displayChart(range) {
 
-            //initialise chart
+
+            //destory old chart if it exists in order to make a new one 
+            if (window.btcPriceChart != null) {
+                console.log(true);
+                window.btcPriceChart.destroy();
+            }
+
             var btcChart = document.getElementById('btcChart').getContext('2d');
 
 
             $.ajax({
-                url: '/Home/DisplayBtcPrices',
+                url: '/Home/DisplayBtcPrices?range=' + range,
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
@@ -35,12 +57,18 @@
                     console.log(date);
                     let price = data.map(b => b.price);
 
-                    var btcPriceChart = new Chart(btcChart, {
+                    window.btcPriceChart = new Chart(btcChart, {
                         type: 'line', // bar, horizontal bar, pie, line, doughnut, radar, polarArea
                         data: {
                             labels: date,
                             datasets: [{
                                 label: 'Prices',
+                                backgroundColor: 'rgba(60,141,188,0.4)',
+                                borderColor: 'rgba(60,141,188,0.8)',
+                                pointColor: '#3b8bba',
+                                pointStrokeColor: 'rgba(60,141,188,1)',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(60,141,188,1)',
                                 data: price
                             }]
                         },
@@ -48,13 +76,20 @@
                     });
 
 
+
                 }
             })
         }
-       
 
+         
         displayChart();
 
+
+    </script>
+
+    <script>
+
+       
 
     </script>
 </body>
