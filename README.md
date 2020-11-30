@@ -11,4 +11,9 @@ This app is still under development, but has core functionality. When this small
 
 GetBtcPrices function needs to be modified via JavaScirpt to retrieve daily results.
 
+Next Steps:
+
+* create card layout, for different crpyto protocols. i.e, 3 x 3 grid
+
+
 Watch this space :) 
